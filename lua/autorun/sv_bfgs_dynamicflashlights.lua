@@ -30,15 +30,16 @@ local function OverrideInternalFlashlight(ply, TurnOn)
 end
 hook.Add("PlayerSwitchFlashlight", "Flashlight_Override", OverrideInternalFlashlight)
 
-function DoCustomFlashlightToggle(ply)
+function DoCustomFlashlightToggle(ply, On)
 	ply:EmitSound("Weapon_Shotgun.Empty")
 	//print(ply:Nick() .. " called the toggle flashlight func!")
-	if ply:GetNWBool("BFG_IsCustomFlashlightOn", true) then
+	if ply:GetNWBool("BFG_IsCustomFlashlightOn", true) or (On == false) then
 		ply:SetNWBool("BFG_IsCustomFlashlightOn", false)
 		SafeRemoveEntity(ply.DynaFlashlight)
 	else
 		ply:SetNWBool("BFG_IsCustomFlashlightOn", true)
 		if ply:IsBot() then return end
+		if IsValid(ply.DynaFlashlight) then return end
 		CreateProjectedTexture(ply)
 		
 		ply.DynaFlashlight:SetParent(ply:GetViewModel())
