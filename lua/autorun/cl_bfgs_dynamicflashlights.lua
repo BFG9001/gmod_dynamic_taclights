@@ -22,7 +22,7 @@ local holdtypeBlacklist = { "melee", "grenade", "knife", "fist", "camera", "norm
 local BASE_BRIGHTNESS = 1
 local function DoThirdPersonTacLights()
 	for k, ply in pairs(player.GetAll()) do
-		if not (v == LocalPlayer()) and ply:GetNWBool("BFG_IsCustomFlashlightOn", false) then
+		if (ply ~= LocalPlayer()) and ply:GetNWBool("BFG_IsCustomFlashlightOn", true) then
 			local handAtt = ply:GetAttachment(ply:LookupAttachment("anim_attachment_RH")) or {}
 			local handPos = handAtt.Pos or ply:GetShootPos()
 			local handAng = handAtt.Ang or ply:EyeAngles()
