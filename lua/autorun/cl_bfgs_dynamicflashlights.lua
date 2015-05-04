@@ -19,7 +19,7 @@ local function LightEffect(ply, pos, ang, brightness, size)
 end
 
 local holdtypeBlacklist = { "melee", "grenade", "knife", "fist", "camera", "normal", "passive" }
-local BASE_BRIGHTNESS = 1
+local BASE_BRIGHTNESS = 2
 local function DoThirdPersonTacLights()
 	for k, ply in pairs(player.GetAll()) do
 		if (ply ~= LocalPlayer()) and ply:GetNWBool("BFG_IsCustomFlashlightOn", true) then
@@ -39,7 +39,7 @@ local function DoThirdPersonTacLights()
 
 			local handTrace = util.TraceLine({ start = handPos, endpos = handPos + (FinalAngle:Forward() * FLASHLIGHT_RANGE) })
 			local brightness = math.min(BASE_BRIGHTNESS * (1/handTrace.Fraction), BASE_BRIGHTNESS)
-			local size = math.Clamp( 150 * (handTrace.Fraction), 45, 150 )
+			local size = math.Clamp( 170 * (handTrace.Fraction), 50, 170 )
 			LightEffect(ply, handTrace.HitPos, FinalAngle, brightness, size)
 
 		end
@@ -63,7 +63,7 @@ local function LightSprite(ply)
 			end
 
 			render.SetMaterial(LightSourceSprite)
-			render.DrawSprite(muzzlePos or handPos or ply:GetShootPos(), 20, 20, Color( 255,255,255 ))
+			render.DrawSprite(muzzlePos or handPos or ply:GetShootPos(), 12, 12, Color( 255,255,255 ))
 	end
 end
 hook.Add("PostPlayerDraw", "BFG_DynamicFlashlights_3rdPerson", LightSprite)
