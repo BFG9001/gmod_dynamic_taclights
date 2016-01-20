@@ -14,15 +14,15 @@ local function LightEffect(ply, pos, ang, brightness, size)
 		light.r = 255
 		light.g = 255
 		light.b = 255
-		light.innerangle = 45
-		light.outerangle = 50
+		light.innerangle = 70
+		light.outerangle = 90
 end
 
 local holdtypeBlacklist = { "melee", "grenade", "knife", "fist", "camera", "normal", "passive" }
 local BASE_BRIGHTNESS = 4
 local function DoThirdPersonTacLights()
 	for k, ply in pairs(player.GetAll()) do
-		if (ply ~= LocalPlayer()) and ply:GetNWBool("BFG_IsCustomFlashlightOn", true) then
+		if ((ply ~= LocalPlayer()) or (ply:ShouldDrawLocalPlayer())) and ply:GetNWBool("BFG_IsCustomFlashlightOn", true) then
 			local handAtt = ply:GetAttachment(ply:LookupAttachment("anim_attachment_RH")) or {}
 			local handPos = handAtt.Pos or ply:GetShootPos()
 			local handAng = handAtt.Ang or ply:EyeAngles()
@@ -39,7 +39,7 @@ local function DoThirdPersonTacLights()
 
 			local handTrace = util.TraceLine({ start = handPos, endpos = handPos + (FinalAngle:Forward() * FLASHLIGHT_RANGE) })
 			local brightness = math.Clamp(BASE_BRIGHTNESS * (1/handTrace.Fraction), 1, BASE_BRIGHTNESS)
-			local size = math.Clamp( 100 * (handTrace.Fraction), 40, 100 )
+			local size = math.Clamp( 100 * (handTrace.Fraction), 60, 400 )
 			LightEffect(ply, handTrace.HitPos, FinalAngle, brightness, size)
 
 		end
