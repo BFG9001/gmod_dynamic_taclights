@@ -1,6 +1,6 @@
 --Serverside functionality
 
-local FlashEnabled = CreateConVar("flashlight_tactical_on" , "1" , FCVAR_REPLICATED  , "Set to 1 to enable tactical flashlights on all weapons")
+local FlashEnabled = CreateConVar("flashlight_tactical_on" , "1" , FCVAR_ARCHIVE  , "Set to 1 to enable tactical flashlights on all weapons")
 
 local function CreateProjectedTexture(ply)
 		ply.DynaFlashlight = ents.Create("env_projectedtexture")
